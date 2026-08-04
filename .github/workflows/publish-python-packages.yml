@@ -61,6 +61,18 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Show package information
+        env:
+          PACKAGE_NAME: ${{ matrix.package.name }}
+          PACKAGE_VERSION: ${{ matrix.package.version }}
+          PACKAGE_DIRECTORY: ${{ matrix.package.directory }}
+          RUN_MODE: ${{ github.event_name == 'pull_request' && 'pull request check' || 'main branch publish' }}
+        run: |
+          echo "Package: $PACKAGE_NAME"
+          echo "Version: $PACKAGE_VERSION"
+          echo "Directory: $PACKAGE_DIRECTORY"
+          echo "Mode: $RUN_MODE"
+
       - name: Install build tools
         run: python -m pip install --upgrade build twine
 
